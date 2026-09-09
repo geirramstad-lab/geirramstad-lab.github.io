@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="no">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Geir Petter Ramstad | CAD & Konstruksjon</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #eef1f4;
+            color: #222;
+            line-height: 1.6;
+        }
+
+        .hero {
+            min-height: 92vh;
+            background:
+                linear-gradient(
+                    rgba(10, 18, 26, 0.78),
+                    rgba(10, 18, 26, 0.86)
+                ),
+                url("solidworks.png");
+
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 50px 20px;
+        }
+
+        .hero-content {
+            max-width: 850px;
+        }
+
+        .hero-logo {
+            width: 420px;
+            max-width: 90%;
+            background: white;
+            padding: 14px 22px;
+            border-radius: 10px;
+            margin-bottom: 28px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+        }
+
+        .hero h1 {
+            font-size: 50px;
+            margin: 0 0 10px;
+        }
+
+        .hero h2 {
+            font-size: 24px;
+            font-weight: normal;
+            color: #d5dde5;
+            margin: 0 0 25px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: #e5e9ed;
+        }
+
+        .hero-button,
+        .button {
+            display: inline-block;
+            background: #2f7db6;
+            color: white;
+            text-decoration: none;
+            padding: 14px 26px;
+            border-radius: 7px;
+            font-weight: bold;
+            font-size: 17px;
+            transition: 0.2s;
+        }
+
+        .hero-button:hover,
+        .button:hover {
+            background: #205f8f;
+            transform: translateY(-2px);
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: #111a23;
+            text-align: center;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 22px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #65a9e8;
+        }
+
+        main {
+            max-width: 1150px;
+            margin: auto;
+            padding: 50px 20px;
+        }
+
+        section {
+            background: white;
+            margin-bottom: 38px;
+            padding: 42px;
+            border-radius: 12px;
+            box-shadow: 0 3px 14px rgba(0,0,0,0.08);
+        }
+
+        section h2 {
+            margin-top: 0;
+            color: #1d2a36;
+            font-size: 30px;
+        }
+
+        .about-text {
+            font-size: 17px;
+            max-width: 850px;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 22px;
+        }
+
+        .skill {
+            background: #e7edf2;
+            padding: 9px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 28px;
+        }
+
+        .project-card {
+            background: #f8fafb;
+            border: 1px solid #d8dde2;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: 0.2s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 26px rgba(0,0,0,0.14);
+        }
+
+        .project-card img {
+            width: 100%;
+            display: block;
+            cursor: pointer;
+        }
+
+        .project-text {
+            padding: 24px;
+        }
+
+        .project-text h3 {
+            margin-top: 0;
+            font-size: 23px;
+            color: #182733;
+        }
+
+        .project-text p {
+            margin-bottom: 8px;
+        }
+
+        .image-info {
+            color: #66717c;
+            font-size: 14px;
+        }
+
+        .contact-box {
+            background: #f4f7f9;
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        .image-viewer {
+            display: none;
+            position: fixed;
+            z-index: 5000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.92);
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+        }
+
+        .image-viewer img {
+            max-width: 96%;
+            max-height: 92%;
+            object-fit: contain;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 0 35px rgba(0,0,0,0.7);
+        }
+
+        .close {
+            position: absolute;
+            top: 14px;
+            right: 30px;
+            color: white;
+            font-size: 46px;
+            cursor: pointer;
+        }
+
+        footer {
+            background: #111a23;
+            color: #cbd2d9;
+            text-align: center;
+            padding: 34px 20px;
+        }
+
+        footer strong {
+            color: white;
+        }
+
+        @media (max-width: 800px) {
+            .projects {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero h2 {
+                font-size: 20px;
+            }
+
+            section {
+                padding: 28px;
+            }
+
+            nav a {
+                display: inline-block;
+                margin: 5px 9px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="hero" id="forside">
+
+    <div class="hero-content">
+
+        <img
+            src="logo.png"
+            alt="GPR - Geir Petter Ramstad"
+            class="hero-logo"
+        >
+
+        <h1>Geir Petter Ramstad</h1>
+
+        <h2>Konstruksjon • CAD • Teknisk løsning</h2>
+
+        <p>
+            Mekanisk konstruksjon, 3D-modellering,
+            tekniske tegninger og CAD/CAM.
+        </p>
+
+        <a class="hero-button" href="#prosjekter">
+            Se prosjektene
+        </a>
+
+    </div>
+
+</div>
+
+<nav>
+
+    <a href="#forside">Forside</a>
+    <a href="#ommeg">Om meg</a>
+    <a href="#prosjekter">Prosjekter</a>
+    <a href="#kontakt">Kontakt</a>
+
+</nav>
+
+<main>
+
+<section id="ommeg">
+
+    <h2>Om meg</h2>
+
+    <div class="about-text">
+
+        <p>
+            Jeg arbeider med CAD/CAM og har interesse for
+            mekanisk konstruksjon, produktutvikling,
+            3D-modellering og teknisk dokumentasjon.
+        </p>
+
+        <p>
+            På denne hjemmesiden viser jeg eksempler på
+            modeller, arbeidstegninger og tekniske prosjekter.
+        </p>
+
+    </div>
+
+    <div class="skills">
+
+        <span class="skill">SolidWorks</span>
+        <span class="skill">Solid Edge</span>
+        <span class="skill">CAD/CAM</span>
+        <span class="skill">3D-modellering</span>
+        <span class="skill">Teknisk tegning</span>
+        <span class="skill">Mekanisk konstruksjon</span>
+
+    </div>
+
+</section>
+
+<section id="prosjekter">
+
+    <h2>CAD-prosjekter</h2>
+
+    <p>
+        Eksempler på tekniske presentasjoner,
+        konstruksjon og arbeidstegninger.
+        Klikk på et bilde for større visning.
+    </p>
+
+    <div class="projects">
+
+        <div class="project-card">
+
+            <img
+                src="solidworks.png"
+                alt="SolidWorks teknisk tegning"
+                onclick="openImage('solidworks.png')"
+            >
+
+            <div class="project-text">
+
+                <h3>SolidWorks</h3>
+
+                <p>
+                    Mekanisk 3D-modell med tilhørende
+                    produksjonstegning, målsetting,
+                    snitt og teknisk dokumentasjon.
+                </p>
+
+                <p class="image-info">
+                    Klikk på bildet for full størrelse.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="project-card">
+
+            <img
+                src="solidedge.png"
+                alt="Solid Edge teknisk tegning"
+                onclick="openImage('solidedge.png')"
+            >
+
+            <div class="project-text">
+
+                <h3>Solid Edge</h3>
+
+                <p>
+                    Eksempel på mekanisk konstruksjon,
+                    3D-modellering og komplett
+                    teknisk tegningsunderlag.
+                </p>
+
+                <p class="image-info">
+                    Klikk på bildet for full størrelse.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section id="kontakt">
+
+    <h2>Kontakt</h2>
+
+    <div class="contact-box">
+
+        <p>
+            Ta gjerne kontakt dersom du ønsker å komme i kontakt
+            om CAD, konstruksjon eller tekniske prosjekter.
+        </p>
+
+        <a class="button" href="mailto:geir.ramstad@gmail.com">
+            Send e-post
+        </a>
+
+    </div>
+
+</section>
+
+</main>
+
+<footer>
+
+    <strong>Geir Petter Ramstad</strong>
+
+    <br>
+
+    Konstruksjon • CAD • Teknisk løsning
+
+    <br><br>
+
+    © 2026 Geir Petter Ramstad
+
+</footer>
+
+<div
+    id="imageViewer"
+    class="image-viewer"
+    onclick="closeImage()"
+>
+
+    <span class="close">&times;</span>
+
+    <img
+        id="largeImage"
+        src=""
+        alt="Teknisk tegning"
+        onclick="event.stopPropagation()"
+    >
+
+</div>
+
+<script>
+
+    function openImage(src) {
+        document.getElementById("largeImage").src = src;
+        document.getElementById("imageViewer").style.display = "flex";
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeImage() {
+        document.getElementById("imageViewer").style.display = "none";
+        document.body.style.overflow = "auto";
+    }
+
+    document.addEventListener("keydown", function(event) {
+        if (event.key === "Escape") {
+            closeImage();
+        }
+    });
+
+</script>
+
+</body>
+
+</html>
